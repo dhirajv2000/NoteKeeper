@@ -19,6 +19,7 @@ StorageManager.prototype.clearStorage = function () {
 }
 
 //returns the maxID
+/*
 StorageManager.prototype.maxID = function () {
    return localStorage.length == 0 ? 0 : Math.max(...this.getStorage().map(obj => obj.id)) + 1;
-}
+}*/

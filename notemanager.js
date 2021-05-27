@@ -1,7 +1,7 @@
 //Manages Operations on notes
 function NoteManager () {
     const self = this;
-    let clickID, noteContent,noteTitle, note, noteID = this.maxID();
+    let clickID, noteContent,noteTitle, note, noteID = 0;
     const grid = document.querySelector('.grid')
     let noteArray = [];
 
@@ -73,7 +73,7 @@ function NoteManager () {
     //Clears all the notes and local storage.
     this.clearNotes = function () {
         self.clearStorage();
-        noteID = self.maxID();
+        //noteID = self.maxID();
         self.displayAll();
     }
 }
