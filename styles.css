@@ -28,6 +28,7 @@ body {
 
 .note-title {
     font-size: 30px;
+    font-weight: bolder;
     width : 400px;
     height: 40px;
     margin-top: 20px;
@@ -41,7 +42,7 @@ body {
     padding: 10px;;
     text-align: center;
 }
-.button {
+.button1 {
     background-color: #4CAF50; 
     border: none;
     color: white;
@@ -66,4 +67,18 @@ body {
 .button4:hover {
     background-color: #084581;
     color: whitesmoke ;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+button{
+    border-radius: 50%;
+    outline: none;
+    background-color: none;
+}
+
+button:hover{
+    background-color: grey;
 }
