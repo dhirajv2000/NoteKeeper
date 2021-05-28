@@ -61,6 +61,7 @@ function NoteManager(resourceManager) {
 
     //Clears all the notes and local storage.
     this.clearNotes = function () {
+        if (!confirm('Are you sure you want to delete? Notes once deleted cannot be undone.')) return;
         self.clearStorage();
         self.displayAll();
     }
