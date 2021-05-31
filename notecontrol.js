@@ -1,14 +1,14 @@
 //Manages Operations on notes
-function NoteManager(resourceManager) {
+function NoteControl(noteView) {
     const self = this;
     let clickID, noteContent, noteTitle, note;
     const grid = document.querySelector('.grid')
     let noteArray = [];
-    //this.isUnsaved = false;
+    this.isUnsaved = false;
 
     //Adds a new note to local storage
     this.addNewNote = function () {
-        let note = new CreateNote(resourceManager.uuidv4());
+        let note = new CreateNote(generateID());
         noteArray = self.getStorage();
         noteArray.push(note);
         self.setStorage(noteArray)
@@ -17,13 +17,24 @@ function NoteManager(resourceManager) {
 
     //Displays the note on the page
     this.renderNote = function (note) {
-        let tempelate = resourceManager.getTemplate();
+        let tempelate = getTemplate();
         const wrapper = document.createElement('div');
         wrapper.setAttribute('id', note.id);
         wrapper.setAttribute('class', 'note-wrapper');
         wrapper.innerHTML += tempelate;
-        wrapper.querySelector('.note-title').innerHTML = note.title;
-        wrapper.querySelector('.note-content').innerHTML = note.content;
+        if (note.title) {
+            wrapper.querySelector('.note-title').innerHTML = note.title;
+        }
+        if (note.content)
+            wrapper.querySelector('.note-content').innerHTML = note.content;
+        if (note.font.bold)
+            wrapper.querySelector('.note-content').classList.add('bold')
+        if (note.font.italic)
+            wrapper.querySelector('.note-content').classList.add('italic')
+        if (note.font.underline)
+            wrapper.querySelector('.note-content').classList.add('underline')
+        if (note.font.strike)
+            wrapper.querySelector('.note-content').classList.add('strike')
         self.appendListeners(wrapper);
         grid.appendChild(wrapper)
     }
@@ -39,7 +50,7 @@ function NoteManager(resourceManager) {
         note.title = noteTitle.innerHTML;
         note.content = noteContent.innerHTML;
         self.setStorage(noteArray)
-        //self.isUnsaved = false;
+        self.isUnsaved = false;
     }
 
     //Deletes a note and updates local storage
@@ -59,6 +70,12 @@ function NoteManager(resourceManager) {
         noteArray.forEach(note => self.renderNote(note))
     }
 
+    //Saves all notes
+    this.saveAll = function () {
+        noteArray = self.getStorage();
+        noteArray.forEach(note => self.updateNote(note.id))
+    }
+
     //Clears all the notes and local storage.
     this.clearNotes = function () {
         if (!confirm('Are you sure you want to delete? Notes once deleted cannot be undone.')) return;
@@ -66,8 +83,8 @@ function NoteManager(resourceManager) {
         self.displayAll();
     }
 
-     //returns the id of the button whic is clicked
-     this.getButtonId = function (node) {
+    //returns the id of the button whic is clicked
+    this.getButtonId = function (node) {
         return node.parentNode.parentNode.id;
     }
 
@@ -80,40 +97,35 @@ function NoteManager(resourceManager) {
     this.appendListeners = function (wrapper) {
 
         let boldButton = wrapper.querySelector('.note-btns').querySelector('#bold-btn')
-        boldButton.addEventListener("click", self.makeBold)
+        boldButton.addEventListener("click", noteView.changeFont)
 
         let italicButton = wrapper.querySelector('.note-btns').querySelector('#italic-btn')
-        italicButton.addEventListener("click", self.makeItalic)
+        italicButton.addEventListener("click", noteView.changeFont)
+
+        let underlineButton = wrapper.querySelector('.note-btns').querySelector('#underline-btn')
+        underlineButton.addEventListener("click", noteView.changeFont)
+
+        let strikeButton = wrapper.querySelector('.note-btns').querySelector('#strike-btn')
+        strikeButton.addEventListener("click", noteView.changeFont)
+
 
         let deleteButton = wrapper.querySelector('#delete-btn')
         deleteButton.addEventListener('click', self.deleteNote)
 
-        wrapper.addEventListener('input', self.detectChange)
+        wrapper.addEventListener('click', () => {
+            self.isUnsaved = true
+        })
+        wrapper.addEventListener('mouseleave', self.detectChange)
+
+        wrapper.querySelector('.note-content').addEventListener('select', () => {
+            console.log(window.getSelection().anchorNode)
+        })
+
+
+        //wrapper.querySelector('.note-title').addEventListener('focusin', noteView.clearPlaceholder)
+        //wrapper.querySelector('.note-title').addEventListener('focusout', noteView.addPlaceholder)
+
     }
 
-    //Make Itallic
-    this.makeItalic = function () {
-        clickID = self.getButtonId(this);
-        const wrapper = document.getElementById(clickID);
-        var textContent = wrapper.querySelector('.note-content').innerHTML;
-        if (textContent.search('<i>') == -1) {
-            wrapper.querySelector('.note-content').innerHTML = wrapper.querySelector('.note-content').innerHTML.italics();
-        } else {
-            wrapper.querySelector('.note-content').innerHTML = textContent.replace(/(<([^b>]+)>)/ig, '');
-        }
-        self.updateNote(self.getButtonId(this))
-    }
 
-    //Make Bold
-    this.makeBold = function () {
-        clickID = self.getButtonId(this);
-        const wrapper = document.getElementById(clickID);
-        var textContent = wrapper.querySelector('.note-content').innerHTML;
-        if (textContent.search('<b>') == -1) {
-            wrapper.querySelector('.note-content').innerHTML = wrapper.querySelector('.note-content').innerHTML.bold();
-        } else {
-            wrapper.querySelector('.note-content').innerHTML = textContent.replace(/(<([^i>]+)>)/ig, '');
-        }
-        self.updateNote(self.getButtonId(this))
-    }
 }

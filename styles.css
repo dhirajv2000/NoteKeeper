@@ -6,17 +6,18 @@ body {
 
 .grid {
     margin: 50px auto;
-    padding-bottom: 10px;;
+    padding-bottom: 10px;
+    ;
     display: flex;
     flex-wrap: wrap;
     width: 1320px;
     height: auto;
 }
 
-.note-wrapper{
+.note-wrapper {
     height: 500px;
     width: 400px;
-    background-color:#edf5e1;
+    background-color: #edf5e1;
     margin: 10px;
     padding: 10px;
     word-wrap: break-word;
@@ -29,21 +30,27 @@ body {
 .note-title {
     font-size: 30px;
     font-weight: bolder;
-    width : 400px;
+    width: 400px;
     height: 40px;
     margin-top: 20px;
     margin-bottom: 30px;
+    text-align: center;
+    cursor: text;
+
 }
 
 .note-content {
     font-size: 20px;
-    width : 380px;
+    width: 380px;
     height: 300px;
-    padding: 10px;;
+    padding: 10px;
+    ;
     text-align: center;
+    cursor: text;
 }
+
 .button1 {
-    background-color: #4CAF50; 
+    background-color: #4CAF50;
     border: none;
     color: white;
     padding: 16px 32px;
@@ -56,29 +63,48 @@ body {
     cursor: pointer;
     border-radius: 50%;
     font-family: 'Lobster', cursive;
- }
+}
 
 .button4 {
     background-color: #05386b;
     color: white;
     border: 2px solid #e7e7e7;
-  }
-  
+}
+
 .button4:hover {
     background-color: #084581;
-    color: whitesmoke ;
+    color: whitesmoke;
 }
 
-.bold{
-    font-weight: bold;
-}
-
-button{
+button {
     border-radius: 50%;
     outline: none;
     background-color: none;
 }
 
-button:hover{
+button:hover {
     background-color: grey;
+}
+
+
+.italic {
+    font-style: italic;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.strike {
+    text-decoration: line-through;
+}
+
+[contenteditable]:empty:before {
+    content: attr(data-placeholder);
+    color: grey;
+    font-weight: bold;
 }
