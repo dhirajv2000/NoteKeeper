@@ -30,23 +30,11 @@ function NoteView() {
       'italic-btn': 'italic',
       'bold-btn': 'bold',
       'underline-btn': 'underline',
-      'strike-btn': 'strike'
+      'strike-btn': 'strikethrough'
     }
     let selectedFont = fontStyle[buttonClicked]
-    clickID = self.getButtonId(this);
-    const wrapperContent = document.getElementById(clickID).querySelector('.note-content');
-    noteArray = self.getStorage();
-    if (!(wrapperContent.innerHTML)) return
-    note = noteArray.find(note => note.id == clickID);
-    if (wrapperContent.classList.contains(selectedFont)) {
-      wrapperContent.classList.remove(selectedFont)
-      note.font[selectedFont] = false;
-    } else {
-      wrapperContent.classList.add(selectedFont)
-      note.font[selectedFont] = true;
+    document.execCommand(selectedFont, false, '')
     }
 
 
-    self.setStorage(noteArray)
-  }
 }

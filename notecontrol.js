@@ -1,10 +1,10 @@
 //Manages Operations on notes
 function NoteControl(noteView) {
     const self = this;
-    let clickID, noteContent, noteTitle, note;
+    let clickID, noteContent, noteTitle, note, noteArray = [],
+        timer = null;
     const grid = document.querySelector('.grid')
-    let noteArray = [];
-    this.isUnsaved = false;
+    //this.isUnsaved = false;
 
     //Adds a new note to local storage
     this.addNewNote = function () {
@@ -50,7 +50,7 @@ function NoteControl(noteView) {
         note.title = noteTitle.innerHTML;
         note.content = noteContent.innerHTML;
         self.setStorage(noteArray)
-        self.isUnsaved = false;
+        //self.isUnsaved = false;
     }
 
     //Deletes a note and updates local storage
@@ -90,36 +90,37 @@ function NoteControl(noteView) {
 
     //Detects changes and updates the note
     this.detectChange = function () {
-        self.updateNote(this.id);
+        clearTimeout(timer)
+        let id = this.id
+        timer = setTimeout(function () {
+            self.updateNote(id);
+        }, 3000)
     }
 
     //appends event listeners to a new note object
     this.appendListeners = function (wrapper) {
 
         let boldButton = wrapper.querySelector('.note-btns').querySelector('#bold-btn')
+        boldButton.addEventListener('mousedown', function(e) { e.preventDefault()})
         boldButton.addEventListener("click", noteView.changeFont)
 
         let italicButton = wrapper.querySelector('.note-btns').querySelector('#italic-btn')
+        italicButton.addEventListener('mousedown', function(e) { e.preventDefault()})
         italicButton.addEventListener("click", noteView.changeFont)
 
         let underlineButton = wrapper.querySelector('.note-btns').querySelector('#underline-btn')
+        underlineButton.addEventListener('mousedown', function(e) { e.preventDefault()})
         underlineButton.addEventListener("click", noteView.changeFont)
 
         let strikeButton = wrapper.querySelector('.note-btns').querySelector('#strike-btn')
+        strikeButton.addEventListener('mousedown', function(e) { e.preventDefault()})
         strikeButton.addEventListener("click", noteView.changeFont)
 
 
         let deleteButton = wrapper.querySelector('#delete-btn')
         deleteButton.addEventListener('click', self.deleteNote)
 
-        wrapper.addEventListener('click', () => {
-            self.isUnsaved = true
-        })
-        wrapper.addEventListener('mouseleave', self.detectChange)
-
-        wrapper.querySelector('.note-content').addEventListener('select', () => {
-            console.log(window.getSelection().anchorNode)
-        })
+        wrapper.addEventListener('input', self.detectChange)
 
 
         //wrapper.querySelector('.note-title').addEventListener('focusin', noteView.clearPlaceholder)

@@ -29,3 +29,5 @@ document.addEventListener('keydown', function (e) {
 window.onbeforeunload = function (event) {
     if (noteControl.isUnsaved) return "Confirm refresh";
 };
+
+
