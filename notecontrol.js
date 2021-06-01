@@ -101,19 +101,27 @@ function NoteControl(noteView) {
     this.appendListeners = function (wrapper) {
 
         let boldButton = wrapper.querySelector('.note-btns').querySelector('#bold-btn')
-        boldButton.addEventListener('mousedown', function(e) { e.preventDefault()})
+        boldButton.addEventListener('mousedown', function (e) {
+            e.preventDefault()
+        })
         boldButton.addEventListener("click", noteView.changeFont)
 
         let italicButton = wrapper.querySelector('.note-btns').querySelector('#italic-btn')
-        italicButton.addEventListener('mousedown', function(e) { e.preventDefault()})
+        italicButton.addEventListener('mousedown', function (e) {
+            e.preventDefault()
+        })
         italicButton.addEventListener("click", noteView.changeFont)
 
         let underlineButton = wrapper.querySelector('.note-btns').querySelector('#underline-btn')
-        underlineButton.addEventListener('mousedown', function(e) { e.preventDefault()})
+        underlineButton.addEventListener('mousedown', function (e) {
+            e.preventDefault()
+        })
         underlineButton.addEventListener("click", noteView.changeFont)
 
         let strikeButton = wrapper.querySelector('.note-btns').querySelector('#strike-btn')
-        strikeButton.addEventListener('mousedown', function(e) { e.preventDefault()})
+        strikeButton.addEventListener('mousedown', function (e) {
+            e.preventDefault()
+        })
         strikeButton.addEventListener("click", noteView.changeFont)
 
 

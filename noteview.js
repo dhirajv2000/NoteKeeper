@@ -34,7 +34,7 @@ function NoteView() {
     }
     let selectedFont = fontStyle[buttonClicked]
     document.execCommand(selectedFont, false, '')
-    }
+  }
 
 
 }
